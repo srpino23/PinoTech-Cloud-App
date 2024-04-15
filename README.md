@@ -1,16 +1,9 @@
 # pinotech_cloud
 
-A new Flutter project.
+Aplicacion inspirada en google drive para uso personal con una interfaz mas moderna y intuitiva
 
-## Getting Started
+## Imagenes
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Screenshot_20240413-194701](https://github.com/srpino23/PinoTech-Cloud-App/assets/63370189/170e9e2d-9086-4d1e-b148-86a34ecee932)
+![Screenshot_20240413-194712](https://github.com/srpino23/PinoTech-Cloud-App/assets/63370189/5c4b8b6a-4781-40f8-9d00-314135f1df3b)
+![Screenshot_20240414-203647](https://github.com/srpino23/PinoTech-Cloud-App/assets/63370189/c6d33231-aa6e-417f-ac94-3791789f9aea)
