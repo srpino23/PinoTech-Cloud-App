@@ -67,7 +67,7 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            "Avalible Storage",
+                            "Avalible Storage 2",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
