@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:pinotech_cloud/components/header.dart';
-import 'package:pinotech_cloud/screens/LoginScreen.dart';
+import 'package:pinotech_cloud/screens/FolderScreen.dart';
 import 'package:pinotech_cloud/screens/RegisterScreen.dart';
 import 'package:pinotech_cloud/screens/HomeScreen.dart';
 
@@ -16,7 +16,7 @@ class Navigation extends StatefulWidget {
 class _NavigationState extends State<Navigation> {
   final List<Widget> pages = [
     const HomeScreen(),
-    const LoginScreen(),
+    const FolderScreen(),
     const RegisterScreen(),
   ];
 
