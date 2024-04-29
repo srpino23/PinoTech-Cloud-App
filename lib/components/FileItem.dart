@@ -128,6 +128,14 @@ class FileItem extends StatelessWidget {
                               ),
                             ),
                             Container(
+                              width: 120,
+                              child: Divider(
+                                color: Colors.grey.shade300,
+                                thickness: 1,
+                                height: 1,
+                              ),
+                            ),
+                            Container(
                               height: 50,
                               width: 120,
                               child: ElevatedButton(
