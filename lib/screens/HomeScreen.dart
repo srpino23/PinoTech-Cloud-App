@@ -1,11 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'package:pinotech_cloud/api/api.dart';
 import 'package:pinotech_cloud/components/RoundedProgressBar.dart';
-import 'package:pinotech_cloud/components/FileItem.dart';
+import 'package:pinotech_cloud/components/ListFileItem.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<dynamic> files = [];
+
+  bool loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  void fetchData() async {
+    try {
+      final data = await Api.obtenerDatos();
+      setState(() {
+        files = data['files'] ?? [];
+        loading = false;
+      });
+    } catch (error) {
+      print('Error al obtener los datos: $error');
+      setState(() {
+        loading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +54,7 @@ class HomeScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                   decoration: BoxDecoration(
                     color: Color(0xFF222222),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                       margin: EdgeInsets.only(top: 20),
                       decoration: BoxDecoration(
                         color: Color(0xFF222222),
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       child: ElevatedButton(
                         onPressed: () {},
@@ -106,7 +137,7 @@ class HomeScreen extends StatelessWidget {
                           shadowColor: Colors.transparent,
                           padding: EdgeInsets.zero,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(15),
                           ),
                         ),
                         child: Container(
@@ -129,7 +160,7 @@ class HomeScreen extends StatelessWidget {
                       margin: EdgeInsets.only(top: 20),
                       decoration: BoxDecoration(
                         color: Color(0xFF222222),
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       child: ElevatedButton(
                         onPressed: () {},
@@ -138,7 +169,7 @@ class HomeScreen extends StatelessWidget {
                           shadowColor: Colors.transparent,
                           padding: EdgeInsets.zero,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(15),
                           ),
                         ),
                         child: Container(
@@ -161,7 +192,7 @@ class HomeScreen extends StatelessWidget {
                       margin: EdgeInsets.only(top: 20),
                       decoration: BoxDecoration(
                         color: Color(0xFF222222),
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       child: ElevatedButton(
                         onPressed: () {},
@@ -170,7 +201,7 @@ class HomeScreen extends StatelessWidget {
                           shadowColor: Colors.transparent,
                           padding: EdgeInsets.zero,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(15),
                           ),
                         ),
                         child: Container(
@@ -201,16 +232,22 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                loading
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Container(
+                        constraints: BoxConstraints(
+                            maxHeight: MediaQuery.of(context).size.height),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: files
+                                .map((file) => ListFileItem(file: file))
+                                .toList(),
+                          ),
+                        ),
+                      ),
               ],
-            ),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-                    .map((element) => FileItem())
-                    .toList(),
-              ),
             ),
           ),
         ],

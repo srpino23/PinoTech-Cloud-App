@@ -1,0 +1,168 @@
+{
+  "_id": {
+    "$oid": "1"
+  },
+  "username": "SrPino23",
+  "mail": "omgalexis570@gmail.com",
+  "password": "192834@pinotech",
+  "folders": [
+    {
+      "name": "Folder 1",
+      "rute": "",
+      "mainFolder": "2",
+      "files": [
+        {
+          "name": "Image 1.jpg",
+          "size": "101944",
+          "extension": ".jpg",
+          "rute": "http://pinotech.v6.army/files/Files/Cumplea%C3%B1os%20Micaela.png",
+          "url": "",
+          "_id": {
+            "$oid": "5"
+          }
+        },
+        {
+          "name": "Image 2.jpg",
+          "size": "101944",
+          "extension": ".jpg",
+          "rute": "http://pinotech.v6.army/files/Files/Cumplea%C3%B1os%20Micaela.png",
+          "url": "",
+          "_id": {
+            "$oid": "6"
+          }
+        }
+      ],
+      "folders": [
+        {
+          "name": "Folder 2",
+          "rute": "",
+          "mainFolder": "3",
+          "files": [],
+          "folders": [],
+          "_id": {
+            "$oid": "3"
+          },
+          "date": {
+            "$date": "2024-03-23"
+          }
+        },
+        {
+          "name": "Folder 3",
+          "rute": "",
+          "mainFolder": "4",
+          "files": [],
+          "folders": [],
+          "_id": {
+            "$oid": "4"
+          },
+          "date": {
+            "$date": "2024-03-23"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "2"
+      },
+      "date": {
+        "$date": "2024-03-23"
+      }
+    },
+    {
+      "name": "Folder 4",
+      "rute": "",
+      "mainFolder": "2",
+      "files": [
+        {
+          "name": "Image 3.jpg",
+          "size": "101944",
+          "extension": ".jpg",
+          "rute": "http://pinotech.v6.army/files/Files/Cumplea%C3%B1os%20Micaela.png",
+          "url": "",
+          "_id": {
+            "$oid": "8"
+          }
+        }
+      ],
+      "folders": [
+        {
+          "name": "Folder 5",
+          "rute": "",
+          "mainFolder": "7",
+          "files": [
+            {
+              "name": "Image 4.jpg",
+              "size": "101944",
+              "extension": ".jpg",
+              "rute": "http://pinotech.v6.army/files/Files/Cumplea%C3%B1os%20Micaela.png",
+              "url": "",
+              "_id": {
+                "$oid": "9"
+              }
+            }
+          ],
+          "folders": [],
+          "_id": {
+            "$oid": "10"
+          },
+          "date": {
+            "$date": "2024-03-23"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "7"
+      },
+      "date": {
+        "$date": "2024-03-23"
+      }
+    },
+    {
+      "name": "Folder 5",
+      "rute": "",
+      "mainFolder": "2",
+      "files": [],
+      "folders": [],
+      "_id": {
+        "$oid": "7"
+      },
+      "date": {
+        "$date": "2024-03-23"
+      }
+    }
+  ],
+  "files": [
+    {
+      "name": "Image 5.jpg",
+      "size": "101944",
+      "extension": ".jpg",
+      "rute": "http://pinotech.v6.army/files/Files/Cumplea%C3%B1os%20Micaela.png",
+      "url": "",
+      "_id": {
+        "$oid": "5"
+      }
+    },
+    {
+      "name": "Image 6.jpg",
+      "size": "101944",
+      "extension": ".jpg",
+      "rute": "http://pinotech.v6.army/files/Files/Cumplea%C3%B1os%20Micaela.png",
+      "url": "",
+      "_id": {
+        "$oid": "6"
+      }
+    },
+    {
+      "name": "Document 1 aaaaaa.docx",
+      "size": "2221944",
+      "extension": ".docx",
+      "rute": "http://pinotech.v6.army/files/Files/Cumplea%C3%B1os%20Micaela.png",
+      "url": "",
+      "_id": {
+        "$oid": "6"
+      }
+    }
+  ],
+  "date": {
+    "$date": "2024-03-23"
+  }
+}

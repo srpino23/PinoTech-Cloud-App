@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'package:pinotech_cloud/screens/LoginScreen.dart';
+import 'package:pinotech_cloud/screens/RegisterScreen.dart';
+
 class MainScreen extends StatelessWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  final void Function() login;
+  final void Function() register;
+
+  const MainScreen({Key? key, required this.login, required this.register})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +70,14 @@ class MainScreen extends StatelessWidget {
                 width: 300,
                 height: 60,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(login: login),
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF27FE75),
                     shape: RoundedRectangleBorder(
@@ -87,7 +101,15 @@ class MainScreen extends StatelessWidget {
                 width: 300,
                 height: 60,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            RegisterScreen(register: register),
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
                     side: BorderSide(

@@ -4,7 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pinotech_cloud/components/subHeader.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+  final void Function() register;
+
+  const RegisterScreen({Key? key, required this.register}) : super(key: key);
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -57,13 +59,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     fontWeight: FontWeight.w900,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: Color(0xFFA1A1A1),
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: Color(0xFF27FE75),
                     ),
@@ -100,13 +102,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     fontWeight: FontWeight.w900,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: Color(0xFFA1A1A1),
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: Color(0xFF27FE75),
                     ),
@@ -175,13 +177,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     fontWeight: FontWeight.w900,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: Color(0xFFA1A1A1),
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: Color(0xFF27FE75),
                     ),
@@ -250,13 +252,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     fontWeight: FontWeight.w900,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: Color(0xFFA1A1A1),
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: Color(0xFF27FE75),
                     ),
@@ -276,7 +278,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 width: double.infinity,
                 height: 60,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    widget.register();
+                    Navigator.pop(context);
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF27FE75),
                     shape: RoundedRectangleBorder(

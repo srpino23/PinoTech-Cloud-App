@@ -19,14 +19,12 @@ class RoundedProgressBarPainter extends CustomPainter {
     final Offset center = Offset(size.width / 2, size.height / 2);
     final double radius = (size.width - strokeWidth) / 2;
 
-    // Dibujar el fondo
     final Paint backgroundPaint = Paint()
       ..color = backgroundColor
       ..strokeWidth = strokeWidth
       ..style = PaintingStyle.stroke;
     canvas.drawCircle(center, radius, backgroundPaint);
 
-    // Dibujar la barra de progreso
     final Paint progressPaint = Paint()
       ..color = valueColor
       ..strokeWidth = strokeWidth

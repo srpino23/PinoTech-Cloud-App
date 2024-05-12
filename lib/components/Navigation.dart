@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:pinotech_cloud/components/header.dart';
 import 'package:pinotech_cloud/screens/FolderScreen.dart';
-import 'package:pinotech_cloud/screens/RegisterScreen.dart';
+import 'package:pinotech_cloud/screens/PhotoScreen.dart';
 import 'package:pinotech_cloud/screens/HomeScreen.dart';
 
 class Navigation extends StatefulWidget {
@@ -17,7 +17,7 @@ class _NavigationState extends State<Navigation> {
   final List<Widget> pages = [
     const HomeScreen(),
     const FolderScreen(),
-    const RegisterScreen(),
+    const PhotoScreen(),
   ];
 
   int currentPage = 0;
@@ -46,8 +46,7 @@ class _NavigationState extends State<Navigation> {
           height: 80,
           elevation: 0,
           selectedIndex: currentPage,
-          backgroundColor: Colors
-              .transparent, // Cambiado para que el color de fondo sea manejado por el contenedor
+          backgroundColor: Colors.transparent,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
           onDestinationSelected: (index) => setState(() => currentPage = index),
           indicatorColor: Colors.transparent,
@@ -59,7 +58,7 @@ class _NavigationState extends State<Navigation> {
                 height: 30,
                 width: 30,
                 colorFilter: ColorFilter.mode(
-                  Colors.white,
+                  currentPage == 0 ? Color(0xFF27FE75) : Colors.grey.shade400,
                   BlendMode.srcIn,
                 ),
               ),
@@ -73,7 +72,7 @@ class _NavigationState extends State<Navigation> {
                 height: 30,
                 width: 30,
                 colorFilter: ColorFilter.mode(
-                  Colors.white,
+                  currentPage == 1 ? Color(0xFF27FE75) : Colors.grey.shade400,
                   BlendMode.srcIn,
                 ),
               ),
@@ -87,7 +86,7 @@ class _NavigationState extends State<Navigation> {
                 height: 30,
                 width: 30,
                 colorFilter: ColorFilter.mode(
-                  Colors.white,
+                  currentPage == 2 ? Color(0xFF27FE75) : Colors.grey.shade400,
                   BlendMode.srcIn,
                 ),
               ),

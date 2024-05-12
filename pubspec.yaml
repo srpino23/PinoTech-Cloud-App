@@ -1,5 +1,9 @@
 name: pinotech_cloud
-description: "A new Flutter project."
+description: "A modern cloud for android."
+
+# Cambia el nombre de la aplicación
+title: PinoTech Cloud
+
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev

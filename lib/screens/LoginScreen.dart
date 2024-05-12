@@ -4,7 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pinotech_cloud/components/subHeader.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  final void Function() login;
+
+  const LoginScreen({Key? key, required this.login}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -56,13 +58,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontWeight: FontWeight.w900,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: Color(0xFFA1A1A1),
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: Color(0xFF27FE75),
                     ),
@@ -131,13 +133,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontWeight: FontWeight.w900,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: Color(0xFFA1A1A1),
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: Color(0xFF27FE75),
                     ),
@@ -157,7 +159,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: double.infinity,
                 height: 60,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    widget.login();
+                    Navigator.pop(context);
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF27FE75),
                     shape: RoundedRectangleBorder(

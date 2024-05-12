@@ -22,7 +22,9 @@ class SubHeader extends StatelessWidget {
             height: 48,
             margin: EdgeInsets.only(left: 40, top: 40),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
