@@ -328,7 +328,7 @@ class _FolderScreenState extends State<FolderScreen> {
                         : ShareViewGrid(
                             folderDataList: folders,
                             fileDataList: files,
-                            selectFolderFunction: showFolderDetails)
+                            selectFolder: showFolderDetails)
                     : listView
                         ? ViewList(
                             folderDataList: folders,
@@ -617,13 +617,13 @@ class ShareViewGrid extends StatelessWidget {
   final List<dynamic> folderDataList;
   final List<dynamic> fileDataList;
 
-  void showFolderDetails(String folderId) {}
+  final void Function(String folderId) selectFolder;
 
   const ShareViewGrid(
       {Key? key,
       required this.folderDataList,
       required this.fileDataList,
-      required void Function(String folderId) selectFolderFunction})
+      required this.selectFolder})
       : super(key: key);
 
   @override
@@ -635,8 +635,8 @@ class ShareViewGrid extends StatelessWidget {
     }
 
     for (var folderData in folderDataList) {
-      widgets.add(
-          GridFolderItem(folder: folderData, selectFolder: showFolderDetails));
+      widgets
+          .add(GridFolderItem(folder: folderData, selectFolder: selectFolder));
     }
 
     return Expanded(
