@@ -18,9 +18,15 @@ class _FolderScreenState extends State<FolderScreen> {
   bool orderBy = true;
   bool listView = false;
   bool viewShare = false;
+  bool canGoBack = false;
 
+  Map<String, dynamic> data = {};
+  List<dynamic> foldersData = [];
   List<dynamic> folders = [];
   List<dynamic> files = [];
+  String folderName = '';
+  String folderMainId = '';
+  String folderActualId = '';
 
   bool loading = true;
 
@@ -32,8 +38,9 @@ class _FolderScreenState extends State<FolderScreen> {
 
   void fetchData() async {
     try {
-      final data = await Api.obtenerDatos();
+      data = await Api.obtenerDatos();
       setState(() {
+        foldersData = data['folders'] ?? [];
         folders = data['folders'] ?? [];
         files = data['files'] ?? [];
         sortData();
@@ -59,6 +66,56 @@ class _FolderScreenState extends State<FolderScreen> {
       String nameB = b['name'].toString().toLowerCase();
       return orderBy ? nameA.compareTo(nameB) : nameB.compareTo(nameA);
     });
+  }
+
+  Future<void> showFolderDetails(String folderId) async {
+    try {
+      if (folderId == data['_id']['\$oid']) {
+        fetchData();
+        canGoBack = false;
+        return;
+      } else {
+        final folder = findFolderById(folderId, foldersData);
+        if (folder != null) {
+          setState(() {
+            folders = folder['folders'];
+            files = folder['files'];
+            folderName = folder['name'];
+            folderMainId = folder['mainFolder'];
+            folderActualId = folderId;
+            sortData();
+            canGoBack = true;
+          });
+        } else {
+          print('No se encontró ninguna carpeta con el ID: $folderId');
+        }
+      }
+    } catch (error) {
+      print('Error al actualizar las carpetas: $error');
+    }
+  }
+
+  Map<String, dynamic>? findFolderById(
+      String folderId, List<dynamic> foldersData) {
+    for (var folder in foldersData) {
+      print('Checking folder: ${folder['_id']['\$oid']}');
+      if (folder['_id']['\$oid'] == folderId) {
+        print('Folder found with ID: $folderId');
+        return folder;
+      } else {
+        final subFolders = folder['folders'];
+        if (subFolders != null && subFolders.isNotEmpty) {
+          print(
+              'Descending into subfolders of folder: ${folder['_id']['\$oid']}');
+          final result = findFolderById(folderId, subFolders);
+          if (result != null) {
+            return result;
+          }
+        }
+      }
+    }
+    print('Folder not found with ID: $folderId');
+    return null;
   }
 
   @override
@@ -159,31 +216,56 @@ class _FolderScreenState extends State<FolderScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        files = [];
-                        folders = [];
-                        orderBy = !orderBy;
-                        fetchData();
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            "Name",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                          orderBy
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Row(
+                      children: [
+                        canGoBack
+                            ? GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    files = [];
+                                    folders = [];
+                                    showFolderDetails(folderMainId);
+                                  });
+                                },
+                                child: Text(
+                                  "..${folderName}",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                              )
+                            : Text(
+                                "Name",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                        GestureDetector(
+                          onTap: () {
+                            if (canGoBack) {
+                              setState(() {
+                                orderBy = !orderBy;
+                                showFolderDetails(folderActualId);
+                              });
+                            } else {
+                              setState(() {
+                                files = [];
+                                folders = [];
+                                orderBy = !orderBy;
+                                fetchData();
+                              });
+                            }
+                          },
+                          child: orderBy
                               ? Icon(
                                   Icons.keyboard_arrow_down_rounded,
                                   color: Colors.white,
@@ -194,8 +276,8 @@ class _FolderScreenState extends State<FolderScreen> {
                                   color: Colors.white,
                                   size: 38,
                                 ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                   Container(
@@ -240,12 +322,22 @@ class _FolderScreenState extends State<FolderScreen> {
                 : viewShare
                     ? listView
                         ? ShareViewList(
-                            folderDataList: folders, fileDataList: files)
+                            folderDataList: folders,
+                            fileDataList: files,
+                            selectFolder: showFolderDetails)
                         : ShareViewGrid(
-                            folderDataList: folders, fileDataList: files)
+                            folderDataList: folders,
+                            fileDataList: files,
+                            selectFolderFunction: showFolderDetails)
                     : listView
-                        ? ViewList(folderDataList: folders, fileDataList: files)
-                        : ViewGrid(folderDataList: folders, fileDataList: files)
+                        ? ViewList(
+                            folderDataList: folders,
+                            fileDataList: files,
+                            selectFolder: showFolderDetails)
+                        : ViewGrid(
+                            folderDataList: folders,
+                            fileDataList: files,
+                            selectFolder: showFolderDetails)
           ],
         ),
       ),
@@ -264,7 +356,9 @@ class _FolderScreenState extends State<FolderScreen> {
                       height: 60,
                       width: 170,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showFolderDetails("6");
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent,
                           shadowColor: Colors.transparent,
@@ -451,8 +545,13 @@ class ViewGrid extends StatelessWidget {
   final List<dynamic> folderDataList;
   final List<dynamic> fileDataList;
 
+  final void Function(String folderId) selectFolder;
+
   const ViewGrid(
-      {Key? key, required this.folderDataList, required this.fileDataList})
+      {Key? key,
+      required this.folderDataList,
+      required this.fileDataList,
+      required this.selectFolder})
       : super(key: key);
 
   @override
@@ -460,7 +559,8 @@ class ViewGrid extends StatelessWidget {
     List<Widget> widgets = [];
 
     for (var folderData in folderDataList) {
-      widgets.add(GridFolderItem(folder: folderData));
+      widgets
+          .add(GridFolderItem(folder: folderData, selectFolder: selectFolder));
     }
 
     for (var fileData in fileDataList) {
@@ -483,8 +583,13 @@ class ViewList extends StatelessWidget {
   final List<dynamic> folderDataList;
   final List<dynamic> fileDataList;
 
+  final void Function(String folderId) selectFolder;
+
   const ViewList(
-      {Key? key, required this.folderDataList, required this.fileDataList})
+      {Key? key,
+      required this.folderDataList,
+      required this.fileDataList,
+      required this.selectFolder})
       : super(key: key);
 
   @override
@@ -492,7 +597,8 @@ class ViewList extends StatelessWidget {
     List<Widget> widgets = [];
 
     for (var folderData in folderDataList) {
-      widgets.add(ListFolderItem(folder: folderData));
+      widgets
+          .add(ListFolderItem(folder: folderData, selectFolder: selectFolder));
     }
 
     for (var fileData in fileDataList) {
@@ -511,8 +617,13 @@ class ShareViewGrid extends StatelessWidget {
   final List<dynamic> folderDataList;
   final List<dynamic> fileDataList;
 
+  void showFolderDetails(String folderId) {}
+
   const ShareViewGrid(
-      {Key? key, required this.folderDataList, required this.fileDataList})
+      {Key? key,
+      required this.folderDataList,
+      required this.fileDataList,
+      required void Function(String folderId) selectFolderFunction})
       : super(key: key);
 
   @override
@@ -524,7 +635,8 @@ class ShareViewGrid extends StatelessWidget {
     }
 
     for (var folderData in folderDataList) {
-      widgets.add(GridFolderItem(folder: folderData));
+      widgets.add(
+          GridFolderItem(folder: folderData, selectFolder: showFolderDetails));
     }
 
     return Expanded(
@@ -543,8 +655,13 @@ class ShareViewList extends StatelessWidget {
   final List<dynamic> folderDataList;
   final List<dynamic> fileDataList;
 
+  final void Function(String folderId) selectFolder;
+
   const ShareViewList(
-      {Key? key, required this.folderDataList, required this.fileDataList})
+      {Key? key,
+      required this.folderDataList,
+      required this.fileDataList,
+      required this.selectFolder})
       : super(key: key);
 
   @override
@@ -556,7 +673,8 @@ class ShareViewList extends StatelessWidget {
     }
 
     for (var folderData in folderDataList) {
-      widgets.add(ListFolderItem(folder: folderData));
+      widgets
+          .add(ListFolderItem(folder: folderData, selectFolder: selectFolder));
     }
 
     return Expanded(

@@ -5,7 +5,13 @@ import 'package:popover/popover.dart';
 class GridFolderItem extends StatefulWidget {
   final Map<String, dynamic> folder;
 
-  const GridFolderItem({Key? key, required this.folder}) : super(key: key);
+  final void Function(String folderId) selectFolder;
+
+  const GridFolderItem({
+    Key? key,
+    required this.folder,
+    required this.selectFolder,
+  }) : super(key: key);
 
   @override
   State<GridFolderItem> createState() => _GridFolderItemState();
@@ -31,7 +37,9 @@ class _GridFolderItemState extends State<GridFolderItem> {
               borderRadius: BorderRadius.circular(15),
             ),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                widget.selectFolder(widget.folder['_id']['\$oid']);
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
