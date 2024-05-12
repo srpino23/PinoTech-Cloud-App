@@ -1,4 +1,4 @@
-package com.example.pinotech_cloud
+package com.pinotech.cloud
 
 import io.flutter.embedding.android.FlutterActivity
 
