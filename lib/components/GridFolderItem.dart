@@ -116,8 +116,8 @@ class _GridFolderItemState extends State<GridFolderItem> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Container(
-                              height: 50,
-                              width: 130,
+                              height: 60,
+                              width: 170,
                               child: ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
@@ -139,14 +139,14 @@ class _GridFolderItemState extends State<GridFolderItem> {
                                         width: 32,
                                         height: 32,
                                         child: Icon(
-                                          Icons.share,
-                                          color: Colors.blue.shade300,
+                                          Icons.edit_rounded,
+                                          color: Colors.blue.shade400,
                                           size: 32,
                                         ),
                                       ),
                                       SizedBox(width: 10),
                                       Text(
-                                        "Share",
+                                        "Edit Name",
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 16,
@@ -159,7 +159,7 @@ class _GridFolderItemState extends State<GridFolderItem> {
                               ),
                             ),
                             Container(
-                              width: 130,
+                              width: 170,
                               child: Divider(
                                 color: Colors.grey.shade400,
                                 thickness: 1,
@@ -167,8 +167,8 @@ class _GridFolderItemState extends State<GridFolderItem> {
                               ),
                             ),
                             Container(
-                              height: 50,
-                              width: 130,
+                              height: 60,
+                              width: 170,
                               child: ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(

@@ -16,15 +16,20 @@ class _GridFileItemState extends State<GridFileItem> {
   Widget build(BuildContext context) {
     String sizeBytesString = widget.file['size'];
     double sizeBytes = double.parse(sizeBytesString);
-    double sizeMb = sizeBytes / (1024 * 1024);
 
     String displaySize;
-    if (sizeBytes < 1024 * 1024) {
+    if (sizeBytes < 1024) {
+      displaySize = '${sizeBytes} bytes';
+    } else if (sizeBytes < 1024 * 1024) {
       displaySize = '${(sizeBytes / 1024).toStringAsFixed(2)} KB';
     } else if (sizeBytes < 1024 * 1024 * 1024) {
-      displaySize = '${sizeMb.toStringAsFixed(2)} MB';
+      displaySize = '${(sizeBytes / (1024 * 1024)).toStringAsFixed(2)} MB';
+    } else if (sizeBytes < 1024 * 1024 * 1024 * 1024) {
+      displaySize =
+          '${(sizeBytes / (1024 * 1024 * 1024)).toStringAsFixed(2)} GB';
     } else {
-      displaySize = '${(sizeMb / 1024).toStringAsFixed(2)} GB';
+      displaySize =
+          '${(sizeBytes / (1024 * 1024 * 1024 * 1024)).toStringAsFixed(2)} TB';
     }
 
     bool isImageExtension(String extension) {
@@ -123,8 +128,8 @@ class _GridFileItemState extends State<GridFileItem> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Container(
-                              height: 50,
-                              width: 130,
+                              height: 60,
+                              width: 170,
                               child: ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
@@ -147,7 +152,7 @@ class _GridFileItemState extends State<GridFileItem> {
                                         height: 32,
                                         child: Icon(
                                           Icons.share,
-                                          color: Colors.blue.shade300,
+                                          color: Colors.blue.shade200,
                                           size: 32,
                                         ),
                                       ),
@@ -166,7 +171,7 @@ class _GridFileItemState extends State<GridFileItem> {
                               ),
                             ),
                             Container(
-                              width: 130,
+                              width: 170,
                               child: Divider(
                                 color: Colors.grey.shade400,
                                 thickness: 1,
@@ -174,8 +179,59 @@ class _GridFileItemState extends State<GridFileItem> {
                               ),
                             ),
                             Container(
-                              height: 50,
-                              width: 130,
+                              height: 60,
+                              width: 170,
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.transparent,
+                                  shadowColor: Colors.transparent,
+                                  padding: EdgeInsets.zero,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width: 32,
+                                        height: 32,
+                                        child: Icon(
+                                          Icons.edit_rounded,
+                                          color: Colors.blue.shade400,
+                                          size: 32,
+                                        ),
+                                      ),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        "Edit Name",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w900,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 170,
+                              child: Divider(
+                                color: Colors.grey.shade400,
+                                thickness: 1,
+                                height: 1,
+                              ),
+                            ),
+                            Container(
+                              height: 60,
+                              width: 170,
                               child: ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(

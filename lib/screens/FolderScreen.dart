@@ -98,15 +98,11 @@ class _FolderScreenState extends State<FolderScreen> {
   Map<String, dynamic>? findFolderById(
       String folderId, List<dynamic> foldersData) {
     for (var folder in foldersData) {
-      print('Checking folder: ${folder['_id']['\$oid']}');
       if (folder['_id']['\$oid'] == folderId) {
-        print('Folder found with ID: $folderId');
         return folder;
       } else {
         final subFolders = folder['folders'];
         if (subFolders != null && subFolders.isNotEmpty) {
-          print(
-              'Descending into subfolders of folder: ${folder['_id']['\$oid']}');
           final result = findFolderById(folderId, subFolders);
           if (result != null) {
             return result;
@@ -232,12 +228,19 @@ class _FolderScreenState extends State<FolderScreen> {
                                     showFolderDetails(folderMainId);
                                   });
                                 },
-                                child: Text(
-                                  "..${folderName}",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w900,
+                                child: Container(
+                                  constraints: BoxConstraints(
+                                    maxWidth: 160,
+                                  ),
+                                  child: Text(
+                                    "../${folderName}",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                    overflow: TextOverflow.fade,
+                                    softWrap: false,
                                   ),
                                 ),
                               )
@@ -356,9 +359,7 @@ class _FolderScreenState extends State<FolderScreen> {
                       height: 60,
                       width: 170,
                       child: ElevatedButton(
-                        onPressed: () {
-                          showFolderDetails("6");
-                        },
+                        onPressed: () {},
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent,
                           shadowColor: Colors.transparent,
