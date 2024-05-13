@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'package:pinotech_cloud/screens/SettingsScreen.dart';
+
 class Header extends StatelessWidget {
-  const Header({Key? key}) : super(key: key);
+  final void Function() logOut;
+
+  const Header({Key? key, required this.logOut}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +59,14 @@ class Header extends StatelessWidget {
             height: 48,
             margin: EdgeInsets.only(right: 20, top: 20),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SettingsScreen(logOut: logOut),
+                  ),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,

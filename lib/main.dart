@@ -35,6 +35,12 @@ class _MainState extends State<Main> {
     });
   }
 
+  void logOut() {
+    setState(() {
+      isLogin = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(
@@ -58,7 +64,7 @@ class _MainState extends State<Main> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home:
-          isLogin ? Navigation() : MainScreen(login: login, register: register),
+          isLogin ? Navigation(logOut: logOut) : MainScreen(login: login, register: register),
     );
   }
 }

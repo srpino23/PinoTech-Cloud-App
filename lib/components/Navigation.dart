@@ -7,7 +7,9 @@ import 'package:pinotech_cloud/screens/PhotoScreen.dart';
 import 'package:pinotech_cloud/screens/HomeScreen.dart';
 
 class Navigation extends StatefulWidget {
-  const Navigation({Key? key});
+  final void Function() logOut;
+
+  const Navigation({Key? key, required this.logOut}) : super(key: key);
 
   @override
   State<Navigation> createState() => _NavigationState();
@@ -28,7 +30,7 @@ class _NavigationState extends State<Navigation> {
       backgroundColor: Color(0xFF141414),
       body: Column(
         children: [
-          Header(),
+          Header(logOut: widget.logOut),
           Expanded(
             child: pages[currentPage],
           ),
