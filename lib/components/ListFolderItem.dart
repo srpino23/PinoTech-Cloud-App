@@ -197,7 +197,7 @@ class _ListFolderItemState extends State<ListFolderItem> {
                                         child: SvgPicture.asset(
                                           'assets/remove.svg',
                                           colorFilter: ColorFilter.mode(
-                                            Colors.red.shade300,
+                                            Color(0xFFFE272F),
                                             BlendMode.srcIn,
                                           ),
                                         ),

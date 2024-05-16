@@ -4,9 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pinotech_cloud/api/api.dart';
 import 'package:pinotech_cloud/components/RoundedProgressBar.dart';
 import 'package:pinotech_cloud/components/ListFileItem.dart';
+import 'package:pinotech_cloud/screens/AccountScreen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final void Function() logOut;
+
+  const HomeScreen({Key? key, required this.logOut}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -195,7 +198,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  AccountScreen(logOut: widget.logOut),
+                            ),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent,
                           shadowColor: Colors.transparent,

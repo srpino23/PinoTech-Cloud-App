@@ -16,13 +16,19 @@ class Navigation extends StatefulWidget {
 }
 
 class _NavigationState extends State<Navigation> {
-  final List<Widget> pages = [
-    const HomeScreen(),
-    const FolderScreen(),
-    const PhotoScreen(),
-  ];
+  late List<Widget> pages;
 
   int currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    pages = [
+      HomeScreen(logOut: widget.logOut),
+      const FolderScreen(),
+      const PhotoScreen(),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +58,7 @@ class _NavigationState extends State<Navigation> {
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
           onDestinationSelected: (index) => setState(() => currentPage = index),
           indicatorColor: Colors.transparent,
-          overlayColor: MaterialStateProperty.all(Colors.transparent),
+          overlayColor: WidgetStateProperty.all(Colors.transparent),
           destinations: [
             NavigationDestination(
               icon: SvgPicture.asset(

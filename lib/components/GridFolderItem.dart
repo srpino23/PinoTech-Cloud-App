@@ -192,7 +192,7 @@ class _GridFolderItemState extends State<GridFolderItem> {
                                         child: SvgPicture.asset(
                                           'assets/remove.svg',
                                           colorFilter: ColorFilter.mode(
-                                            Colors.red.shade300,
+                                            Color(0xFFFE272F),
                                             BlendMode.srcIn,
                                           ),
                                         ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:popover/popover.dart';
 
+import 'package:pinotech_cloud/screens/FileScreen.dart';
+
 class GridFileItem extends StatefulWidget {
   final Map<String, dynamic> file;
 
@@ -58,7 +60,14 @@ class _GridFileItemState extends State<GridFileItem> {
               borderRadius: BorderRadius.circular(15),
             ),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FileScreen(file: widget.file),
+                  ),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
@@ -255,7 +264,7 @@ class _GridFileItemState extends State<GridFileItem> {
                                         child: SvgPicture.asset(
                                           'assets/remove.svg',
                                           colorFilter: ColorFilter.mode(
-                                            Colors.red.shade300,
+                                            Color(0xFFFE272F),
                                             BlendMode.srcIn,
                                           ),
                                         ),

@@ -110,7 +110,6 @@ class _FolderScreenState extends State<FolderScreen> {
         }
       }
     }
-    print('Folder not found with ID: $folderId');
     return null;
   }
 
