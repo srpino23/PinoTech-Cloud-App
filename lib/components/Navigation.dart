@@ -19,13 +19,27 @@ class _NavigationState extends State<Navigation> {
   late List<Widget> pages;
 
   int currentPage = 0;
+  ValueNotifier<bool> viewShareNotifier = ValueNotifier<bool>(false);
+
+  void goShare(int pageNumber) {
+    setState(() {
+      currentPage = pageNumber;
+      viewShareNotifier.value = true;
+    });
+  }
+
+  void altShare(bool value) {
+    setState(() {
+      viewShareNotifier.value = value;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     pages = [
-      HomeScreen(logOut: widget.logOut),
-      const FolderScreen(),
+      HomeScreen(logOut: widget.logOut, goShare: goShare),
+      FolderScreen(viewShareNotifier: viewShareNotifier, altShare: altShare),
       const PhotoScreen(),
     ];
   }
@@ -56,7 +70,12 @@ class _NavigationState extends State<Navigation> {
           selectedIndex: currentPage,
           backgroundColor: Colors.transparent,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-          onDestinationSelected: (index) => setState(() => currentPage = index),
+          onDestinationSelected: (index) => setState(() {
+            currentPage = index;
+            if (index == 1) {
+              viewShareNotifier.value = false;
+            }
+          }),
           indicatorColor: Colors.transparent,
           overlayColor: WidgetStateProperty.all(Colors.transparent),
           destinations: [

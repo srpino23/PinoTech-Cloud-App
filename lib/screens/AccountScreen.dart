@@ -14,6 +14,8 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  bool isEditing = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,7 +121,12 @@ class _AccountScreenState extends State<AccountScreen> {
                                           height: 60,
                                           width: 170,
                                           child: ElevatedButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                              setState(() {
+                                                isEditing = true;
+                                              });
+                                            },
                                             style: ElevatedButton.styleFrom(
                                               backgroundColor:
                                                   Colors.transparent,
@@ -180,7 +187,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                 ),
                               ),
                             ),
-                          ),
+                          )
                         ],
                       ),
                     ),

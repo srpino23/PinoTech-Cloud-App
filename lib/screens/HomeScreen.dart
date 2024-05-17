@@ -5,11 +5,14 @@ import 'package:pinotech_cloud/api/api.dart';
 import 'package:pinotech_cloud/components/RoundedProgressBar.dart';
 import 'package:pinotech_cloud/components/ListFileItem.dart';
 import 'package:pinotech_cloud/screens/AccountScreen.dart';
+import 'package:pinotech_cloud/screens/HelpScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   final void Function() logOut;
+  final void Function(int) goShare;
 
-  const HomeScreen({Key? key, required this.logOut}) : super(key: key);
+  const HomeScreen({Key? key, required this.logOut, required this.goShare})
+      : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -134,7 +137,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HelpScreen(),
+                            ),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent,
                           shadowColor: Colors.transparent,
@@ -147,12 +157,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: double.infinity,
                           height: double.infinity,
                           padding: EdgeInsets.all(30),
-                          child: SvgPicture.asset(
-                            'assets/filledFolder.svg',
-                            colorFilter: ColorFilter.mode(
-                              Colors.white,
-                              BlendMode.srcIn,
-                            ),
+                          child: Icon(
+                            Icons.help_rounded,
+                            color: Colors.white,
+                            size: 40,
                           ),
                         ),
                       ),
@@ -166,7 +174,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          widget.goShare(1);
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent,
                           shadowColor: Colors.transparent,
@@ -179,12 +189,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: double.infinity,
                           height: double.infinity,
                           padding: EdgeInsets.all(30),
-                          child: SvgPicture.asset(
-                            'assets/filledPhoto.svg',
-                            colorFilter: ColorFilter.mode(
-                              Colors.white,
-                              BlendMode.srcIn,
-                            ),
+                          child: Icon(
+                            Icons.share,
+                            color: Colors.white,
+                            size: 35,
                           ),
                         ),
                       ),
