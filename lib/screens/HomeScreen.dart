@@ -19,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Map<String, dynamic> data = {};
   List<dynamic> files = [];
 
   bool loading = true;
@@ -31,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void fetchData() async {
     try {
-      final data = await Api.obtenerDatos();
+      data = await Api.obtenerDatos();
       setState(() {
         files = data['files'] ?? [];
         loading = false;
@@ -251,25 +252,44 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                loading
-                    ? Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : Container(
-                        constraints: BoxConstraints(
-                            maxHeight: MediaQuery.of(context).size.height),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: files
-                                .map((file) => ListFileItem(file: file))
-                                .toList(),
-                          ),
-                        ),
-                      ),
               ],
             ),
           ),
+          loading
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Expanded(
+                  child: ViewList(
+                    fileDataList: files,
+                  ),
+                ),
         ],
+      ),
+    );
+  }
+}
+
+class ViewList extends StatelessWidget {
+  final List<dynamic> fileDataList;
+
+  const ViewList({
+    Key? key,
+    required this.fileDataList,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> widgets = [];
+
+    for (var fileData in fileDataList) {
+      widgets.add(ListFileItem(file: fileData));
+    }
+
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(children: widgets),
       ),
     );
   }

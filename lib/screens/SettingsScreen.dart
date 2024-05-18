@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:pinotech_cloud/components/subHeader.dart';
 import 'package:pinotech_cloud/screens/AccountScreen.dart';
+import 'package:pinotech_cloud/screens/HelpScreen.dart';
 
 class SettingsScreen extends StatefulWidget {
   final void Function() logOut;
@@ -249,7 +250,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HelpScreen(),
+                          ),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
                         shadowColor: Colors.transparent,

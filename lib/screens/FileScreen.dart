@@ -102,6 +102,7 @@ class _FileScreenState extends State<FileScreen> {
                                     ),
                                   ),
                                   Container(
+                                    width: 170,
                                     child: Text(
                                       widget.file['name'],
                                       style: TextStyle(
