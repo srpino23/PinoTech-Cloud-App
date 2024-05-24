@@ -23,18 +23,15 @@ class FolderScreen extends StatefulWidget {
 class _FolderScreenState extends State<FolderScreen> {
   bool orderBy = true;
   bool listView = false;
-
   bool canGoBack = false;
+  bool loading = false;
 
   Map<String, dynamic> data = {};
-  List<dynamic> foldersData = [];
-  List<dynamic> folders = [];
-  List<dynamic> files = [];
+  List<dynamic> allFiles = [];
+  List<dynamic> allFolders = [];
   String folderName = '';
   String folderMainId = '';
   String folderActualId = '';
-
-  bool loading = true;
 
   @override
   void initState() {
@@ -43,12 +40,14 @@ class _FolderScreenState extends State<FolderScreen> {
   }
 
   void fetchData() async {
+    String username = 'test';
+    String mail = 'test@test.com';
+    String password = 'test';
     try {
-      data = await Api.obtenerDatos();
+      data = await Api.obtenerDatos(username, mail, password);
       setState(() {
-        foldersData = data['folders'] ?? [];
-        folders = data['folders'] ?? [];
-        files = data['files'] ?? [];
+        allFiles = data['files'];
+        allFolders = data['folders'];
         sortData();
         loading = false;
       });
@@ -61,13 +60,13 @@ class _FolderScreenState extends State<FolderScreen> {
   }
 
   void sortData() {
-    folders.sort((a, b) {
+    allFolders.sort((a, b) {
       String nameA = a['name'].toString().toLowerCase();
       String nameB = b['name'].toString().toLowerCase();
       return orderBy ? nameA.compareTo(nameB) : nameB.compareTo(nameA);
     });
 
-    files.sort((a, b) {
+    allFiles.sort((a, b) {
       String nameA = a['name'].toString().toLowerCase();
       String nameB = b['name'].toString().toLowerCase();
       return orderBy ? nameA.compareTo(nameB) : nameB.compareTo(nameA);
@@ -76,16 +75,16 @@ class _FolderScreenState extends State<FolderScreen> {
 
   Future<void> showFolderDetails(String folderId) async {
     try {
-      if (folderId == data['_id']['\$oid']) {
+      if (folderId == data['_id']) {
         fetchData();
         canGoBack = false;
         return;
       } else {
-        final folder = findFolderById(folderId, foldersData);
+        final folder = findFolderById(folderId, data);
         if (folder != null) {
           setState(() {
-            folders = folder['folders'];
-            files = folder['files'];
+            allFolders = folder['folders'];
+            allFiles = folder['files'];
             folderName = folder['name'];
             folderMainId = folder['mainFolder'];
             folderActualId = folderId;
@@ -102,9 +101,9 @@ class _FolderScreenState extends State<FolderScreen> {
   }
 
   Map<String, dynamic>? findFolderById(
-      String folderId, List<dynamic> foldersData) {
-    for (var folder in foldersData) {
-      if (folder['_id']['\$oid'] == folderId) {
+      String folderId, Map<String, dynamic> foldersData) {
+    for (var folder in allFolders) {
+      if (folder['_id'] == folderId) {
         return folder;
       } else {
         final subFolders = folder['folders'];
@@ -229,8 +228,8 @@ class _FolderScreenState extends State<FolderScreen> {
                                 ? GestureDetector(
                                     onTap: () {
                                       setState(() {
-                                        files = [];
-                                        folders = [];
+                                        allFiles = [];
+                                        allFolders = [];
                                         showFolderDetails(folderMainId);
                                       });
                                     },
@@ -267,8 +266,8 @@ class _FolderScreenState extends State<FolderScreen> {
                                   });
                                 } else {
                                   setState(() {
-                                    files = [];
-                                    folders = [];
+                                    allFiles = [];
+                                    allFolders = [];
                                     orderBy = !orderBy;
                                     fetchData();
                                   });
@@ -331,21 +330,21 @@ class _FolderScreenState extends State<FolderScreen> {
                     : viewShare
                         ? listView
                             ? ShareViewList(
-                                folderDataList: folders,
-                                fileDataList: files,
+                                allFolders: allFolders,
+                                allFiles: allFiles,
                                 selectFolder: showFolderDetails)
                             : ShareViewGrid(
-                                folderDataList: folders,
-                                fileDataList: files,
+                                allFolders: allFolders,
+                                allFiles: allFiles,
                                 selectFolder: showFolderDetails)
                         : listView
                             ? ViewList(
-                                folderDataList: folders,
-                                fileDataList: files,
+                                allFolders: allFolders,
+                                allFiles: allFiles,
                                 selectFolder: showFolderDetails)
                             : ViewGrid(
-                                folderDataList: folders,
-                                fileDataList: files,
+                                allFolders: allFolders,
+                                allFiles: allFiles,
                                 selectFolder: showFolderDetails)
               ],
             ),
@@ -551,15 +550,15 @@ class CustomFloatingButton extends ShapeBorder {
 }
 
 class ViewGrid extends StatelessWidget {
-  final List<dynamic> folderDataList;
-  final List<dynamic> fileDataList;
+  final List<dynamic> allFolders;
+  final List<dynamic> allFiles;
 
   final void Function(String folderId) selectFolder;
 
   const ViewGrid(
       {Key? key,
-      required this.folderDataList,
-      required this.fileDataList,
+      required this.allFolders,
+      required this.allFiles,
       required this.selectFolder})
       : super(key: key);
 
@@ -567,12 +566,12 @@ class ViewGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> widgets = [];
 
-    for (var folderData in folderDataList) {
+    for (var folderData in allFolders) {
       widgets
           .add(GridFolderItem(folder: folderData, selectFolder: selectFolder));
     }
 
-    for (var fileData in fileDataList) {
+    for (var fileData in allFiles) {
       widgets.add(GridFileItem(file: fileData));
     }
 
@@ -589,15 +588,15 @@ class ViewGrid extends StatelessWidget {
 }
 
 class ViewList extends StatelessWidget {
-  final List<dynamic> folderDataList;
-  final List<dynamic> fileDataList;
+  final List<dynamic> allFolders;
+  final List<dynamic> allFiles;
 
   final void Function(String folderId) selectFolder;
 
   const ViewList(
       {Key? key,
-      required this.folderDataList,
-      required this.fileDataList,
+      required this.allFolders,
+      required this.allFiles,
       required this.selectFolder})
       : super(key: key);
 
@@ -605,12 +604,12 @@ class ViewList extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> widgets = [];
 
-    for (var folderData in folderDataList) {
+    for (var folderData in allFolders) {
       widgets
           .add(ListFolderItem(folder: folderData, selectFolder: selectFolder));
     }
 
-    for (var fileData in fileDataList) {
+    for (var fileData in allFiles) {
       widgets.add(ListFileItem(file: fileData));
     }
 
@@ -623,15 +622,15 @@ class ViewList extends StatelessWidget {
 }
 
 class ShareViewGrid extends StatelessWidget {
-  final List<dynamic> folderDataList;
-  final List<dynamic> fileDataList;
+  final List<dynamic> allFolders;
+  final List<dynamic> allFiles;
 
   final void Function(String folderId) selectFolder;
 
   const ShareViewGrid(
       {Key? key,
-      required this.folderDataList,
-      required this.fileDataList,
+      required this.allFolders,
+      required this.allFiles,
       required this.selectFolder})
       : super(key: key);
 
@@ -639,11 +638,11 @@ class ShareViewGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> widgets = [];
 
-    for (var fileData in fileDataList) {
+    for (var fileData in allFiles) {
       widgets.add(GridFileItem(file: fileData));
     }
 
-    for (var folderData in folderDataList) {
+    for (var folderData in allFolders) {
       widgets
           .add(GridFolderItem(folder: folderData, selectFolder: selectFolder));
     }
@@ -661,15 +660,15 @@ class ShareViewGrid extends StatelessWidget {
 }
 
 class ShareViewList extends StatelessWidget {
-  final List<dynamic> folderDataList;
-  final List<dynamic> fileDataList;
+  final List<dynamic> allFolders;
+  final List<dynamic> allFiles;
 
   final void Function(String folderId) selectFolder;
 
   const ShareViewList(
       {Key? key,
-      required this.folderDataList,
-      required this.fileDataList,
+      required this.allFolders,
+      required this.allFiles,
       required this.selectFolder})
       : super(key: key);
 
@@ -677,11 +676,11 @@ class ShareViewList extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> widgets = [];
 
-    for (var fileData in fileDataList) {
+    for (var fileData in allFiles) {
       widgets.add(ListFileItem(file: fileData));
     }
 
-    for (var folderData in folderDataList) {
+    for (var folderData in allFolders) {
       widgets
           .add(ListFolderItem(folder: folderData, selectFolder: selectFolder));
     }

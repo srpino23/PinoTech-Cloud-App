@@ -15,6 +15,7 @@ class _PhotoScreenState extends State<PhotoScreen> {
   bool orderBy = true;
   bool listView = false;
 
+  Map<String, dynamic> data = {};
   List<dynamic> files = [];
   bool loading = true;
 
@@ -25,8 +26,12 @@ class _PhotoScreenState extends State<PhotoScreen> {
   }
 
   void fetchData() async {
+    String username = 'test';
+    String mail = 'test@test.com';
+    String password = 'test';
     try {
-      final data = await Api.obtenerDatos();
+      data = await Api.obtenerDatos(username, mail, password);
+      print(data);
       filterData(data);
       sortFilesByName();
       setState(() {

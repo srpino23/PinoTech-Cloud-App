@@ -7,9 +7,11 @@ class ListFolderItem extends StatefulWidget {
 
   final void Function(String folderId) selectFolder;
 
-  const ListFolderItem(
-      {Key? key, required this.folder, required this.selectFolder})
-      : super(key: key);
+  const ListFolderItem({
+    Key? key,
+    required this.folder,
+    required this.selectFolder,
+  }) : super(key: key);
 
   @override
   State<ListFolderItem> createState() => _ListFolderItemState();
@@ -38,7 +40,7 @@ class _ListFolderItemState extends State<ListFolderItem> {
           setState(() {
             isEditing = false;
           });
-          widget.selectFolder(widget.folder['_id']['\$oid']);
+          widget.selectFolder(widget.folder['_id']);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,

@@ -80,7 +80,7 @@ class _ListFileItemState extends State<ListFileItem> {
                     decoration: BoxDecoration(
                       image: isImage
                           ? DecorationImage(
-                              image: NetworkImage(widget.file['rute']),
+                              image: NetworkImage(widget.file['url']),
                               fit: BoxFit.cover,
                             )
                           : null,

@@ -31,8 +31,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void fetchData() async {
+    String username = 'test';
+    String mail = 'test@test.com';
+    String password = 'test';
     try {
-      data = await Api.obtenerDatos();
+      data = await Api.obtenerDatos(username, mail, password);
       setState(() {
         files = data['files'] ?? [];
         loading = false;
@@ -260,9 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: CircularProgressIndicator(),
                 )
               : Expanded(
-                  child: ViewList(
-                    fileDataList: files,
-                  ),
+                  child: ViewList(fileDataList: files),
                 ),
         ],
       ),

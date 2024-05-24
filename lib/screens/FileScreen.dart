@@ -33,7 +33,7 @@ class _FileScreenState extends State<FileScreen> {
           '${(sizeBytes / (1024 * 1024 * 1024 * 1024)).toStringAsFixed(2)} TB';
     }
 
-    DateTime date = DateTime.parse(widget.file['date']['\$date']);
+    DateTime date = DateTime.parse(widget.file['date']);
     String formattedDate = DateFormat('dd-MM-yyyy').format(date);
 
     bool isImageExtension(String extension) {
@@ -65,7 +65,7 @@ class _FileScreenState extends State<FileScreen> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(15),
                             child: Image(
-                              image: NetworkImage(widget.file['rute']),
+                              image: NetworkImage(widget.file['url']),
                               fit: BoxFit.contain,
                               width: double.infinity,
                             ),

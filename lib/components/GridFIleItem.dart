@@ -54,7 +54,7 @@ class _GridFileItemState extends State<GridFileItem> {
             decoration: BoxDecoration(
               image: isImage
                   ? DecorationImage(
-                      image: NetworkImage(widget.file['rute']),
+                      image: NetworkImage(widget.file['url']),
                       fit: BoxFit.cover,
                     )
                   : null,

@@ -43,7 +43,7 @@ class _GridFolderItemState extends State<GridFolderItem> {
                 setState(() {
                   isEditing = false;
                 });
-                widget.selectFolder(widget.folder['_id']['\$oid']);
+                widget.selectFolder(widget.folder['_id']);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
